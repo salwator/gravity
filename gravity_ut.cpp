@@ -132,3 +132,13 @@ TEST_F(SimulationTest, AttractionIsEqualInDimensions)
     ASSERT_DOUBLE_EQ(planets_new[0].vy, G);
 }
 
+TEST_F(SimulationTest, VelocityChangesPositionDuringTime_InSecondDimension)
+{
+    planets.push_back(Planet(10, 0, 0));
+    planets[0].vy = 10;
+
+    auto planets_new = simulate(planets);
+
+    ASSERT_DOUBLE_EQ(planets_new[0].y, 10);
+    ASSERT_DOUBLE_EQ(planets_new[0].x, 0);
+}

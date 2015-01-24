@@ -76,9 +76,10 @@ struct Planet{
         vx(other.vx), vy(other.vy)
     {};
 
-    void move(double dx)
+    void move(double dt = DELTA_TIME)
     {
-        x += dx;
+        x += vx * dt;
+        y += vy * dt;
     }
 
     void change_speed(Vector dv)

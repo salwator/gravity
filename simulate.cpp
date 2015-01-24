@@ -67,7 +67,7 @@ Planets simulate(Planets & planets, double dt)
                    {
                        auto new_planet(planet);
 
-                       new_planet.move(new_planet.vx * dt);
+                       new_planet.move(dt);
                        new_planet.change_speed(calc_all_accel(planets, planet) * dt);
 
                        return new_planet;
