@@ -3,9 +3,6 @@
 #include <vector>
 #include <cmath>
 
-const auto G = 6.67384E-11;
-const auto DELTA_TIME = 1.0L;
-
 struct Vector
 {
     Vector(double x, double y)
@@ -76,7 +73,7 @@ struct Planet{
         vx(other.vx), vy(other.vy)
     {};
 
-    void move(double dt = DELTA_TIME)
+    void move(double dt)
     {
         x += vx * dt;
         y += vy * dt;
