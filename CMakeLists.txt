@@ -12,7 +12,7 @@ SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
 
 include_directories(Include)
 
-add_library(simulate SHARED simulate.cpp)
+ADD_SUBDIRECTORY(simulation)
 
 # MAIN
 
@@ -21,14 +21,4 @@ target_link_libraries(Gravity simulate)
 
 # TESTING
 
-ADD_SUBDIRECTORY(gtest-1.7.0)
-
 enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
-add_executable(GravityUT gravity_ut.cpp)
-target_link_libraries(GravityUT simulate gtest gtest_main)
-
-add_test(SimulationTest GravityUT)
-
-

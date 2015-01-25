@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Include/simulate.h"
+#include "space.h"
 
 int main()
 {
