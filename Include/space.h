@@ -101,5 +101,4 @@ struct Planet{
 
 typedef std::vector<Planet> Planets;
 
-Planets simulate(Planets&, double dt = DELTA_TIME);
 

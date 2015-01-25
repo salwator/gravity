@@ -13,6 +13,7 @@ SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
 include_directories(Include)
 
 ADD_SUBDIRECTORY(simulation)
+ADD_SUBDIRECTORY(csv_import)
 
 # MAIN
 
