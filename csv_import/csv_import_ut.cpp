@@ -1,50 +1,5 @@
 #include <gtest/gtest.h>
-#include "space.h"
-
-#include <string>
-
-std::vector<std::string> split_string(const std::string & str, const char delimiter)
-{
-    auto string_splitted = std::vector<std::string>();
-
-    std::string number;
-
-    for(auto c : str)
-    {
-        if(c != delimiter)
-            number += c;
-        else
-        {
-            string_splitted.push_back(number);
-            number.clear();
-        }
-
-    }
-
-    if(number.size())
-        string_splitted.push_back(number);
-
-    return string_splitted;
-}
-
-Planet create_planet_from_csv_string(std::string csv_string)
-{
-    auto string_splitted = split_string(csv_string, ','); 
-
-    if(string_splitted.size() > 0)
-    {
-        while(string_splitted.size() < 5)
-            string_splitted.push_back("0.0");
-
-        return Planet(std::stod(string_splitted[0]),
-                      std::stod(string_splitted[1]),
-                      std::stod(string_splitted[2]),
-                      std::stod(string_splitted[3]),
-                      std::stod(string_splitted[4]));
-    }
-
-    return Planet(0,0);
-}
+#include "csv_import.h"
 
 class CsvImportTest : public ::testing::Test
 {
