@@ -61,10 +61,10 @@ struct Vector
 
 struct Planet{
 
-    Planet(double mass, double x, double y = 0):
+    Planet(double mass, double x, double y = 0, double vx = 0, double vy = 0):
         mass(mass),
         x(x), y(y),
-        vx(0), vy(0)
+        vx(vx), vy(vy)
     {};
 
     Planet(const Planet & other):
