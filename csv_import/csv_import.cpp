@@ -35,9 +35,9 @@ Planet create_planet_from_csv_string(const std::string csv_string)
         str_splitted.push_back(0.0);
 
     return Planet(str_splitted[csv_position::mass],
-                  str_splitted[csv_position::x],
-                  str_splitted[csv_position::y],
-                  str_splitted[csv_position::vx],
-                  str_splitted[csv_position::vy]);
+                  Vector(str_splitted[csv_position::x],
+                         str_splitted[csv_position::y]),
+                  Vector(str_splitted[csv_position::vx],
+                         str_splitted[csv_position::vy]));
 }
 

@@ -61,13 +61,7 @@ struct Vector
 
 struct Planet{
 
-    Planet(double mass, double x, double y = 0, double vx = 0, double vy = 0):
-        mass(mass),
-        x(x), y(y),
-        vx(vx), vy(vy)
-    {};
-
-    Planet(double mass, Vector position, Vector speed):
+    Planet(double mass, Vector position, Vector speed = Vector(0,0)):
         mass(mass),
         x(position.x),y(position.y),
         vx(speed.x),vy(speed.y)
@@ -87,18 +81,6 @@ struct Planet{
     Vector speed() const
     {
         return Vector(vx,vy);
-    }
-
-    void move(double dt)
-    {
-        x += vx * dt;
-        y += vy * dt;
-    }
-
-    void change_speed(Vector dv)
-    {
-        vx += dv.x;
-        vy += dv.y;
     }
 
     Vector distance_to(const Planet& other) const
