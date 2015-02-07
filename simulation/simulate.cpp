@@ -32,15 +32,15 @@ Vector normal_vector(const Planet & first, const Planet & second)
 Vector calc_single_accel(const Planet & calculated_planet, const Planet & second_planet)
 {
     return Vector(normal_vector(calculated_planet, second_planet) *
-                                ((G * second_planet.mass) /
-                                  pow(distance(calculated_planet,
-                                               second_planet),
-                                      2)));
+                  ((G * second_planet.mass) /
+                    pow(distance(calculated_planet,
+                                 second_planet),
+                        2)));
 }
 
-Vector calc_all_accel(Planets & planets, const Planet & planet)
+Vector calc_all_accel(const Planets & planets, const Planet & planet)
 {
-    auto planet_accel = [&planet](Vector acc, Planet & second)
+    auto planet_accel = [&planet](Vector acc, const Planet & second)
                         {
                             return  (same_planet(planet, second)
                                      ? acc
@@ -56,7 +56,7 @@ Vector calc_all_accel(Planets & planets, const Planet & planet)
 }
 
 
-Planets simulate(Planets & planets, double dt)
+Planets simulate(const Planets & planets, double dt)
 {
     auto planets_new = Planets();
 
