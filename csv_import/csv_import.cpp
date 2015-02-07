@@ -10,7 +10,9 @@ std::vector<double> split_string(const std::string & str, const char delimiter)
     for(auto c : str)
     {
         if(c != delimiter)
+        {
             str_number += c;
+        }
         else
         {
             add_number(str_number);

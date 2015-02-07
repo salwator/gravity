@@ -65,12 +65,9 @@ Planets simulate(const Planets & planets, double dt)
                    std::back_inserter(planets_new),
                    [&planets,dt](const Planet & planet)
                    {
-                       auto new_planet(planet);
-
-                       new_planet.move(dt);
-                       new_planet.change_speed(calc_all_accel(planets, planet) * dt);
-
-                       return new_planet;
+                       return Planet(planet.mass,
+                                     planet.position() + planet.speed() * dt,
+                                     planet.speed() + calc_all_accel(planets, planet) * dt);
                    });
 
     return planets_new;

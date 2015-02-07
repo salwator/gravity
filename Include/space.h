@@ -67,11 +67,27 @@ struct Planet{
         vx(vx), vy(vy)
     {};
 
+    Planet(double mass, Vector position, Vector speed):
+        mass(mass),
+        x(position.x),y(position.y),
+        vx(speed.x),vy(speed.y)
+    {};
+
     Planet(const Planet & other):
         mass(other.mass),
         x(other.x), y(other.y),
         vx(other.vx), vy(other.vy)
     {};
+
+    Vector position() const
+    {
+        return Vector(x,y);
+    }
+
+    Vector speed() const
+    {
+        return Vector(vx,vy);
+    }
 
     void move(double dt)
     {
