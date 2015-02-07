@@ -40,7 +40,7 @@ Vector calc_single_accel(const Planet & calculated_planet, const Planet & second
 
 Vector calc_all_accel(const Planets & planets, const Planet & planet)
 {
-    auto planet_accel = [&planet](Vector acc, const Planet & second)
+    auto accel_to_other_planets = [&planet](Vector acc, const Planet & second)
                         {
                             return  (same_planet(planet, second)
                                      ? acc
@@ -50,10 +50,10 @@ Vector calc_all_accel(const Planets & planets, const Planet & planet)
     return std::accumulate(planets.begin(),
                            planets.end(),
                            Vector(0,0),
-                           planet_accel);
+                           accel_to_other_planets);
 }
 
-}
+} // namespace
 
 
 Planets simulate(const Planets & planets, double dt)
