@@ -1,0 +1,9 @@
+tags
+**/*.[oa]
+**/*.so
+**/*.cmake
+**/CMakeFiles
+**/CMakeCache.txt
+**/Makefile
+**/*.swp
+**/Testing
