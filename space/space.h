@@ -1,28 +1,15 @@
 #pragma once
 
 #include <vector>
-#include <cmath>
 
 struct Vector
 {
-    Vector(double x, double y)
-        : x(x),y(y)
-    {}
-
-    Vector(const Vector & other)
-        : x(other.x),y(other.y)
-    {}
+    Vector(double, double);
+    Vector(const Vector &);
 
 
-    Vector(Vector && old)
-        : x(old.x),y(old.y)
-    {}
-
-    Vector operator+ (const Vector& right) const
-    {
-        return Vector(x + right.x, y + right.y);
-    }
-
+    Vector operator+ (const Vector& right) const;
+    Vector& operator+= (const Vector& right);
     Vector& operator= (const Vector& ) = default;
 
     template<typename T>
@@ -37,56 +24,21 @@ struct Vector
         return Vector(x / right, y / right);
     }
 
-    Vector& operator+= (const Vector& right)
-    {
-        x += right.x;
-        y += right.y;
-        return *this;
-    }
-
-    double length() const
-    {
-        return sqrt(x*x + y*y);
-    }
-
-    void normalize()
-    {
-        auto l = length();
-        x = x / l;
-        y = y / l;
-    }
+    double length() const;
+    void normalize();
 
     double x,y;
 };
 
 struct Planet{
 
-    Planet(double mass, Vector position, Vector speed = Vector(0,0)):
-        mass(mass),
-        x(position.x),y(position.y),
-        vx(speed.x),vy(speed.y)
-    {};
+    Planet(double, Vector, Vector = Vector(0,0));
+    Planet(const Planet &);
 
-    Planet(const Planet & other):
-        mass(other.mass),
-        x(other.x), y(other.y),
-        vx(other.vx), vy(other.vy)
-    {};
 
-    Vector position() const
-    {
-        return Vector(x,y);
-    }
-
-    Vector speed() const
-    {
-        return Vector(vx,vy);
-    }
-
-    Vector distance_to(const Planet& other) const
-    {
-        return Vector(other.x - x, other.y - y);
-    }
+    Vector position() const;
+    Vector speed() const;
+    Vector distance_to(const Planet& other) const;
 
     double mass;
     double x,y;

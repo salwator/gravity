@@ -7,7 +7,7 @@ SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
 include_directories("../Include")
 include_directories("../gtest-1.7.0")
 
-add_library(space SHARED space.cpp)
+add_library(space SHARED Vector.cpp Planet.cpp)
 
 # TESTING
 
