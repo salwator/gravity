@@ -41,3 +41,17 @@ Planet create_planet_from_csv_string(const std::string csv_string)
                          str_splitted[csv_position::vy]));
 }
 
+CsvImporter::CsvImporter(PlanetCreationFunctor & planet_csv_factory_func)
+    : factory_func(planet_csv_factory_func)
+{}
+
+Planets CsvImporter::import(std::istream& input)
+{
+    auto imported_planets = Planets();
+    auto line = std::string();
+
+    while(std::getline(input, line))
+        imported_planets.push_back(factory_func(line));
+
+    return imported_planets;
+}
