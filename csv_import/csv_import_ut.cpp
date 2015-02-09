@@ -26,7 +26,7 @@ bool planet_match(Planet & p1, Planet & p2)
 class CsvImporterTest : public Test
 {
     public:
-        PlanetCreationFunctionMock functionMock;
+        StrictMock<PlanetCreationFunctionMock> functionMock;
         CsvImporter importer = CsvImporter(functionMock);
         std::stringstream input_stream;
 
