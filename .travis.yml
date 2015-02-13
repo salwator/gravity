@@ -1,6 +1,6 @@
 language: cpp
 compiler: clang
 
-script: cmake .
+before_script: cmake .
 script: make all
-script: ctest -V
+after_script: ctest -V
