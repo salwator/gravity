@@ -12,6 +12,7 @@ SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
 
 include_directories(Include)
 include_directories(space)
+include_directories(simulation)
 
 ADD_SUBDIRECTORY(space)
 ADD_SUBDIRECTORY(simulation)
@@ -20,7 +21,7 @@ ADD_SUBDIRECTORY(csv_import)
 # MAIN
 
 add_executable(Gravity gravity.cpp)
-target_link_libraries(Gravity space simulate)
+target_link_libraries(Gravity space newton_simulator csv_import)
 
 # TESTING
 
