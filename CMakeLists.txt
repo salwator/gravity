@@ -1,10 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (Gravity)
 
-SET (CMAKE_C_COMPILER   "cc")
 SET (CMAKE_C_FLAGS      "-Wall -std=c99")
-
-SET (CMAKE_CXX_COMPILER   "c++")
 SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
 
 
