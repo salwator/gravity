@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <GLFW/glfw3.h>
 
 #include "space.h"
 #include "newton_simulator.h"
@@ -23,22 +24,36 @@ Planets sample_planets()
     return planets;
 }
 
+void print_results(ISimulator & simulation)
+{
+    for(const auto & planet : simulation.result())
+    {
+        std::cout << planet.x << "," << planet.y << ",";
+    }
+
+    std::cout << std::endl;
+}
+
 }
 
 int main()
 {
-    auto simulation = NewtonSimulator(sample_planets(), 10);
+    if(not glfwInit())
+        exit(EXIT_FAILURE);
+
+    const auto time_delta = 10;
+    const auto simulation_steps = 10;
+    const auto verbose = false;
+
+
+    auto simulation = NewtonSimulator(sample_planets(), time_delta);
 
     for(auto i = 0; i < 100000; i++)
     {
-        simulation.simulate(10);
+        simulation.simulate(simulation_steps);
 
-        for(const auto & planet : simulation.result())
-        {
-            std::cout << planet.x << "," << planet.y << ",";
-        }
-
-        std::cout << std::endl;
+        if(verbose)
+            print_results(simulation);
     }
 
 }
