@@ -6,6 +6,7 @@
 class ISimulator
 {
     public:
-        virtual void simulate(int) = 0;
+        virtual void simulate(double) = 0;
         virtual const Planets & result() = 0;
+        virtual double time() = 0;
 };

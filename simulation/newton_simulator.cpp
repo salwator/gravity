@@ -7,10 +7,13 @@ NewtonSimulator::NewtonSimulator(Planets planets, double dt)
     dt(dt)
 {}
 
-void NewtonSimulator::simulate(int iterations)
+void NewtonSimulator::simulate(double simulation_step_time)
 {
-    for(auto i = 0; i < iterations; i++)
+    for(auto t = 0.0; t < simulation_step_time; t+=dt)
+    {
         planets = ::simulate(planets, dt);
+        total_time += dt;
+    }
 }
 
 const Planets & NewtonSimulator::result()
@@ -18,4 +21,8 @@ const Planets & NewtonSimulator::result()
     return planets;
 }
 
+double NewtonSimulator::time()
+{
+    return total_time;
+}
 
