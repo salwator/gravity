@@ -9,7 +9,7 @@
 namespace
 {
 
-Planet on_others_orbit(Planet& central, double distance, double mass)
+Planet on_others_orbit(Planet& central, units::base_space distance, units::base_type mass)
 {
     return Planet(mass, Vector(central.x, central.y + distance),
                   Vector(sqrt((G*central.mass) / distance) + central.vx,
@@ -22,8 +22,8 @@ Planets sample_planets()
 
     auto planets = Planets();
     planets.push_back(Planet(sun_mass,Vector(0,0),Vector(0,0)));
-    planets.push_back(on_others_orbit(planets[0], M, au));
-    planets.push_back(on_others_orbit(planets[1], 0.0123 * M, 300000 * kilometer));
+    planets.push_back(on_others_orbit(planets[0], au, M));
+    planets.push_back(on_others_orbit(planets[1], 384403 * kilometer, 0.0123 * M));
     return planets;
 }
 
@@ -46,8 +46,8 @@ int main()
     if(not glfwInit())
         exit(EXIT_FAILURE);
 
-    const auto time_delta = units::minute;
-    const auto print_interval = units::day;
+    const auto time_delta = units::second * 10;
+    const auto print_interval = units::hour * 2;
     const auto simulation_time = units::year;
     const auto verbose = true;
 

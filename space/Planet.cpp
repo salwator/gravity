@@ -1,6 +1,6 @@
 #include "space.h"
 
-Planet::Planet(double mass, Vector position, Vector speed)
+Planet::Planet(units::base_type mass, Vector position, Vector speed)
     :
     mass(mass),
     x(position.x),y(position.y),

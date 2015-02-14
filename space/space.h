@@ -22,13 +22,13 @@ const auto au = 149597871 * kilometer;
 const auto kilogram = base_type(1);
 const auto tone = 1000 * kilogram;
 const auto M = 5.9736E+24 * kilogram;
-const auto sun_mass = 300000 * M;
+const auto sun_mass = 332946 * M;
 
 }
 
 struct Vector
 {
-    Vector(double, double);
+    Vector(units::base_space, units::base_space);
     Vector(const Vector &);
 
 
@@ -48,15 +48,15 @@ struct Vector
         return Vector(x / right, y / right);
     }
 
-    double length() const;
+    units::base_space length() const;
     void normalize();
 
-    double x,y;
+    units::base_space x,y;
 };
 
 struct Planet{
 
-    Planet(double, Vector, Vector = Vector(0,0));
+    Planet(units::base_space, Vector, Vector = Vector(0,0));
     Planet(const Planet &);
 
 
@@ -64,9 +64,9 @@ struct Planet{
     Vector speed() const;
     Vector distance_to(const Planet& other) const;
 
-    double mass;
-    double x,y;
-    double vx, vy;
+    units::base_type mass;
+    units::base_space x,y;
+    units::base_space vx, vy;
 
 };
 

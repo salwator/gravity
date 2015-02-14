@@ -17,7 +17,7 @@ Vector distance_vector(const Planet & first, const Planet & second)
     return first.distance_to(second);
 }
 
-double distance(const Planet & first, const Planet & second)
+units::base_space distance(const Planet & first, const Planet & second)
 {
     return distance_vector(first,second).length();
 }

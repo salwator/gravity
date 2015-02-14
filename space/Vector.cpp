@@ -1,7 +1,7 @@
 #include <cmath>
 #include "space.h"
 
-Vector::Vector(double x, double y)
+Vector::Vector(units::base_space x, units::base_space y)
     : x(x),y(y)
 {}
 
@@ -9,7 +9,7 @@ Vector::Vector(const Vector & other)
     : x(other.x),y(other.y)
 {}
 
-double Vector::length() const
+units::base_space Vector::length() const
 {
     return sqrt(x*x + y*y);
 }
