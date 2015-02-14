@@ -10,7 +10,6 @@ before_install:
     - cd ../gmock-1.7.0
     - cmake .
     - make
-    - sudo make install
     - cd -
 before_script: cmake .
 script: make all
