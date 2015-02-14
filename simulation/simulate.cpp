@@ -56,7 +56,7 @@ Vector calc_all_accel(const Planets & planets, const Planet & planet)
 } // namespace
 
 
-Planets simulate(const Planets & planets, double dt)
+Planets simulate(const Planets & planets, units::base_time dt)
 {
     auto planets_new = Planets();
 

@@ -12,14 +12,14 @@ class NewtonSimulator : public ISimulator
 {
 public:
     NewtonSimulator(Planets, double);
-    void simulate(double) override;
+    void simulate(units::base_time) override;
     const Planets & result() override;
-    double time() override;
+    units::base_time time() override;
 
 private:
     Planets planets;
-    double dt;
-    double total_time = 0.0;
+    units::base_time dt;
+    units::base_time total_time = 0.0;
 };
 
 

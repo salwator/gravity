@@ -6,6 +6,8 @@ namespace units
 {
 
 typedef long double base_type;
+typedef base_type base_space;
+typedef base_type base_time;
 
 const auto second = base_type(1);
 const auto minute = 60 * second;
@@ -13,7 +15,7 @@ const auto hour = 60 * minute;
 const auto day = 24 * hour;
 const auto year = 365.25 * day;
 
-const auto meter = base_type(1);
+const auto meter = base_space(1);
 const auto kilometer = 1000 * meter;
 const auto au = 149597871 * kilometer;
 
