@@ -1,4 +1,4 @@
-add_library(simulate SHARED simulate.cpp)
+add_library(simulate SHARED simulate.cpp simulate_threaded.cpp)
 add_library(newton_simulator SHARED newton_simulator.cpp)
 
 target_link_libraries(simulate tinythread)

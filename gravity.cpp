@@ -31,8 +31,8 @@ Planets sample_planets()
     auto planets = Planets();
     planets.push_back(Planet(sun_mass,Vector(0,0),Vector(0,0))); // Sun
     planets.push_back(on_others_orbit(planets[0], au, M, 0)); // Earth
-    //planets.push_back(on_others_orbit(planets[1], 384403 * kilometer, 0.0123 * M, 0)); // Moon
-    planets.push_back(on_others_orbit(planets[0], 5.3*au, 317 * M, pi()));
+    planets.push_back(on_others_orbit(planets[1], 384403 * kilometer, 0.0123 * M, 0)); // Moon
+    planets.push_back(on_others_orbit(planets[0], 5.3*au, 317 * M, pi())); // Jupiter
     return planets;
 }
 
@@ -69,12 +69,12 @@ int main()
     auto viz = GlViz(5.5*units::au, 5.5*units::au);
 
     const auto time_delta = units::minute * 10;
-    const auto print_interval = units::hour * 2;
-    const auto simulation_time = units::day * 30;
+    const auto print_interval = units::hour;
+    const auto simulation_time = units::year;
     const auto verbose = false;
 
     auto world = sample_planets();
-    add_random_planetoids(world, 0, 3.3*units::au, 0.1*units::M, 500);
+    add_random_planetoids(world, 0, 3.3*units::au, 0.1*units::M, 1000);
 
     auto simulation = NewtonSimulator(world, time_delta);
 
