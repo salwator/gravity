@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 project (Gravity)
 
-SET (CMAKE_C_FLAGS      "-Wall -std=c99")
-SET (CMAKE_CXX_FLAGS      "-Wall -std=c++11 -O3")
+SET (CMAKE_C_FLAGS      "-std=c99")
+SET (CMAKE_CXX_FLAGS      " -std=c++11 -O3")
 
 # GTEST + GMOCK
 IF (DEFINED ENV{GTEST_PATH})
@@ -23,11 +23,13 @@ include_directories(Include)
 include_directories(space)
 include_directories(simulation)
 include_directories("external/glfw/include")
+include_directories("external/TinyThread++-1.1/source")
 
 ADD_SUBDIRECTORY(space)
 ADD_SUBDIRECTORY(simulation)
 ADD_SUBDIRECTORY(csv_import)
 ADD_SUBDIRECTORY("external/glfw")
+ADD_SUBDIRECTORY("external/TinyThread++-1.1")
 
 # MAIN
 
