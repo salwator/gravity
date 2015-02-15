@@ -47,12 +47,14 @@ GlViz::~GlViz()
 
 void GlViz::plot_planets(const Planets & planets)
 {
-    glColor3f(1.0f,1.0f,1.0f);
 
     glBegin(GL_POINTS);
 
     for(const auto & planet : planets)
     {
+        auto shade = planet.mass / units::M;
+
+        glColor3f(0.1+shade,shade,shade);
         glPointSize(planet.mass/units::M);
         glVertex2f(planet.x/world_size_x,
                    planet.y/world_size_y);
