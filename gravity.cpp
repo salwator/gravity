@@ -1,10 +1,10 @@
 #include <iostream>
 #include <cmath>
 #include <ratio>
-#include <GLFW/glfw3.h>
 
 #include "space.h"
 #include "newton_simulator.h"
+#include "GlViz.h"
 
 namespace
 {
@@ -37,19 +37,16 @@ void print_results(ISimulator & simulation)
     std::cout << std::endl;
 }
 
-}
-
-
+} // namespace
 
 int main()
 {
-    if(not glfwInit())
-        exit(EXIT_FAILURE);
+    auto viz = GlViz(1.2*units::au, 1.2*units::au);
 
     const auto time_delta = units::second * 10;
-    const auto print_interval = units::hour * 2;
-    const auto simulation_time = units::year;
-    const auto verbose = true;
+    const auto print_interval = units::day;
+    const auto simulation_time = units::year * 10;
+    const auto verbose = false;
 
 
     auto simulation = NewtonSimulator(sample_planets(), time_delta);
@@ -58,8 +55,9 @@ int main()
     {
         simulation.simulate(print_interval);
 
+        viz.print(simulation.result());
         if(verbose)
             print_results(simulation);
     }
-
 }
+

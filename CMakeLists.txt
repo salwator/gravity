@@ -31,7 +31,7 @@ ADD_SUBDIRECTORY("external/glfw")
 
 # MAIN
 
-add_executable(Gravity gravity.cpp)
+add_executable(Gravity gravity.cpp GlViz.cpp)
 target_link_libraries(Gravity space newton_simulator csv_import)
 target_link_libraries(Gravity glfw ${GLFW_LIBRARIES})
 
