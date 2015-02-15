@@ -1,7 +1,11 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
+#include <functional>
+#include <list>
+#include <memory>
 
+#include "tinythread.h"
 #include "simulate.h"
 
 namespace
@@ -71,4 +75,69 @@ Planets simulate(const Planets & planets, units::base_time dt)
                    });
 
     return planets_new;
+}
+
+Planets simulate_range(const Planets & planets, const std::vector<std::reference_wrapper<const Planet>> & range, units::base_time dt)
+{
+    auto range_new = Planets();
+
+    std::transform(range.begin(),
+                   range.end(),
+                   std::back_inserter(range_new),
+                   [&planets,dt](const Planet & planet)
+                   {
+                       return Planet(planet.mass,
+                                     planet.position() + planet.speed() * dt,
+                                     planet.speed() + calc_all_accel(planets, planet) * dt);
+                   });
+
+    return range_new;
+}
+
+struct worker_args
+{
+    const Planets & planets;
+    const std::vector<std::reference_wrapper<const Planet>> & range;
+    const units::base_time dt;
+    Planets & result;
+};
+
+void worker(void * aArg)
+{
+    auto args = (worker_args *) aArg;
+    args->result =  simulate_range(args->planets, args->range, args->dt);
+}
+
+Planets simulate_threaded(const Planets & planets, const units::base_time dt, const int threads_num)
+{
+    auto partial_planets = std::vector<std::vector<std::reference_wrapper<const Planet>>>();
+    for(auto i = 0; i< threads_num; i++)
+       partial_planets.push_back({});
+
+    {
+        auto count = 0;
+        for(const auto & planet : planets)
+        {
+            partial_planets[count++ % threads_num].push_back(std::cref(planet));
+        }
+    }
+
+    auto results = std::vector<Planets>();
+    std::list<std::shared_ptr<tthread::thread>> threadList;
+    std::vector<std::shared_ptr<worker_args>> argList;
+
+    for(auto i = 0; i<threads_num; i++)
+    {
+        results.push_back(Planets());
+        argList.push_back(std::make_shared<worker_args>(worker_args({planets, partial_planets[i], dt, results[i]})));
+        threadList.push_back(std::make_shared<tthread::thread>(worker, (void *) argList[i].get()));
+    }
+
+    auto planets_new = Planets();
+    for(auto const result : results)
+    {
+        planets_new.insert(planets_new.end(),result.begin(),result.end());
+    }
+    return planets_new;
+
 }
