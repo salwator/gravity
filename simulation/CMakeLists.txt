@@ -1,7 +1,7 @@
 add_library(simulate SHARED simulate.cpp simulate_threaded.cpp)
 add_library(newton_simulator SHARED newton_simulator.cpp)
 
-target_link_libraries(simulate tinythread)
+target_link_libraries(simulate pthread)
 target_link_libraries(newton_simulator simulate)
 
 # TESTING

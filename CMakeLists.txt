@@ -23,13 +23,11 @@ include_directories(Include)
 include_directories(space)
 include_directories(simulation)
 include_directories("external/glfw/include")
-include_directories("external/TinyThread++-1.1/source")
 
 ADD_SUBDIRECTORY(space)
 ADD_SUBDIRECTORY(simulation)
 ADD_SUBDIRECTORY(csv_import)
 ADD_SUBDIRECTORY("external/glfw")
-ADD_SUBDIRECTORY("external/TinyThread++-1.1")
 
 # MAIN
 
