@@ -1,16 +1,17 @@
 #include <cstdlib>
 #include "GlViz.h"
+#include <iostream>
 
-GlViz::GlViz(units::base_space world_size_x,
-             units::base_space world_size_y)
+GlViz::GlViz(units::base_space world_size, int x_size, int y_size)
         :
-        world_size_x(world_size_x),
-        world_size_y(world_size_y)
+        world_size(world_size),
+        x_size(x_size),
+        y_size(y_size)
 {
     if(not glfwInit())
         exit(EXIT_FAILURE);
 
-    window = glfwCreateWindow(1280, 1024, "PlanetSimulatorViz", NULL, NULL);
+    window = glfwCreateWindow(x_size, y_size, "PlanetSimulatorViz", NULL, NULL);
 
     if(not window)
     {
@@ -22,7 +23,7 @@ GlViz::GlViz(units::base_space world_size_x,
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glfwGetFramebufferSize(window, &width, &height);
-    ratio = width / (float) height;
+    ratio = float(width)/float(height);
     glOrtho(0, width, height, 0, 0, 1);
     glEnable(GL_SMOOTH);
 }
@@ -52,12 +53,12 @@ void GlViz::plot_planets(const Planets & planets)
 
     for(const auto & planet : planets)
     {
-        auto shade = planet.mass / units::M;
+        auto shade = 0.5 + 0.5*(planet.mass / units::M);
 
         glColor3f(0.1+shade,shade,shade);
         glPointSize(planet.mass/units::M);
-        glVertex2f(planet.x/world_size_x,
-                   planet.y/world_size_y);
+        glVertex2f((planet.x/world_size)/ratio,
+                   planet.y/world_size);
     }
 
     glEnd();
