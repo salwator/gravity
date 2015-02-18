@@ -2,7 +2,7 @@
 #include <cmath>
 #include <ratio>
 #include <random>
-
+#include <chrono>
 #include "space.h"
 #include "newton_simulator.h"
 #include "GlViz.h"
@@ -62,24 +62,72 @@ void print_results(ISimulator & simulation)
     std::cout << std::endl;
 }
 
+class FpsCounter
+{
+    public:
+        void tick()
+        {
+            auto now = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration<float>(now - last_time);
+
+            if(count++ == 0)
+            {
+                last_time = now;
+                return;
+            }
+
+            if(duration >= std::chrono::seconds(1))
+            {
+                fps = count / std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+                count = 0;
+                std::cout << "fps: " << fps << std::endl;
+
+                if(fps > high_fps && high_fps_callback)
+                    high_fps_callback();
+            }
+        }
+
+        int get_fps()
+        {
+            return fps;
+        }
+
+        void set_high_fps_callback(int thr_level, std::function<void()> callback)
+        {
+            high_fps = thr_level;
+            high_fps_callback = callback;
+        }
+
+    private:
+        std::chrono::time_point<std::chrono::high_resolution_clock> last_time;
+        std::function<void()> high_fps_callback;
+        int high_fps = 0;
+        int count = 0;
+        int fps = 0;
+};
+
 } // namespace
 
 int main()
 {
-    auto viz = GlViz(5.5*units::au, 5.5*units::au);
+    auto viz = GlViz(1.1*units::au, 1280, 1024);
 
-    const auto time_delta = units::minute * 10;
-    const auto print_interval = units::hour;
+    const auto time_delta = units::minute;
+    auto print_interval = time_delta;
     const auto simulation_time = units::year;
     const auto verbose = false;
 
     auto world = sample_planets();
-    add_random_planetoids(world, 0, 3.3*units::au, 0.1*units::M, 1000);
+    add_random_planetoids(world, 0, 0.5*units::au, units::M, 500);
 
     auto simulation = NewtonSimulator(world, time_delta);
 
+    auto fpsCount = FpsCounter();
+    fpsCount.set_high_fps_callback(30, [&](){ print_interval += time_delta; });
+
     while(simulation.time() < simulation_time)
     {
+        fpsCount.tick();
         simulation.simulate(print_interval);
 
         viz.print(simulation.result());
