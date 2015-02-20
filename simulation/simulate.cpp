@@ -56,13 +56,13 @@ Vector calc_all_accel(const Planets & planets, const Planet & planet)
 
 } // namespace
 
-
-Planets simulate(const Planets & planets, units::base_time dt)
+template <typename T>
+Planets calculate_planets_in_range(const Planets & planets, const T & planet_range, units::base_time dt)
 {
     auto planets_new = Planets();
 
-    std::transform(planets.begin(),
-                   planets.end(),
+    std::transform(planet_range.begin(),
+                   planet_range.end(),
                    std::back_inserter(planets_new),
                    [&planets,dt](const Planet & planet)
                    {
@@ -74,20 +74,13 @@ Planets simulate(const Planets & planets, units::base_time dt)
     return planets_new;
 }
 
+Planets simulate(const Planets & planets, units::base_time dt)
+{
+    return calculate_planets_in_range(planets, planets, dt);
+}
+
 Planets simulate_range(const Planets & planets, const std::vector<std::reference_wrapper<const Planet>> & range, units::base_time dt)
 {
-    auto range_new = Planets();
-
-    std::transform(range.begin(),
-                   range.end(),
-                   std::back_inserter(range_new),
-                   [&planets,dt](const Planet & planet)
-                   {
-                       return Planet(planet.mass,
-                                     planet.position() + planet.speed() * dt,
-                                     planet.speed() + calc_all_accel(planets, planet) * dt);
-                   });
-
-    return range_new;
+    return calculate_planets_in_range(planets, range, dt);
 }
 
