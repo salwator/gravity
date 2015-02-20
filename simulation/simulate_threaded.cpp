@@ -7,8 +7,6 @@
 namespace
 {
 
-typedef std::vector<std::reference_wrapper<const Planet>> PlanetRefList;
-
 std::vector<PlanetRefList> distribute_all_planets(const Planets & planets, int threads_num)
 {
     auto distributed = std::vector<PlanetRefList>(threads_num);

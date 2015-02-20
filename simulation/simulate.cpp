@@ -79,7 +79,7 @@ Planets simulate(const Planets & planets, units::base_time dt)
     return calculate_planets_in_range(planets, planets, dt);
 }
 
-Planets simulate_range(const Planets & planets, const std::vector<std::reference_wrapper<const Planet>> & range, units::base_time dt)
+Planets simulate_range(const Planets & planets, const PlanetRefList & range, units::base_time dt)
 {
     return calculate_planets_in_range(planets, range, dt);
 }
