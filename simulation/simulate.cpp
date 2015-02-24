@@ -7,11 +7,6 @@
 namespace
 {
 
-bool same_planet(const Planet & first, const Planet & second)
-{
-    return (&first == &second);
-}
-
 template <typename T>
 T square(T x)
 {
@@ -25,14 +20,19 @@ auto calc_single_accel(const Planet & calculated_planet, const Planet & second_p
            / square(calculated_planet.distance_to(second_planet).length());
 }
 
+bool same_planet(const Planet & first, const Planet & second)
+{
+    return (&first == &second);
+}
+
 auto calc_all_accel(const Planets & planets, const Planet & planet)
 {
     auto accel_to_other_planets = [&planet](auto acc, const auto & second)
-                        {
-                            return  (same_planet(planet, second)
-                                     ? acc
-                                     : acc += calc_single_accel(planet, second));
-                        };
+                                  {
+                                      return  (same_planet(planet, second)
+                                              ? acc
+                                              : acc += calc_single_accel(planet, second));
+                                  };
 
     return std::accumulate(planets.begin(),
                            planets.end(),
@@ -40,10 +40,8 @@ auto calc_all_accel(const Planets & planets, const Planet & planet)
                            accel_to_other_planets);
 }
 
-} // namespace
-
 template <typename T>
-Planets calculate_planets_in_range(const Planets & planets, const T & planet_range, units::base_time dt)
+auto calculate_planets_in_range(const Planets & planets, const T & planet_range, units::base_time dt)
 {
     auto planets_new = Planets();
 
@@ -60,6 +58,9 @@ Planets calculate_planets_in_range(const Planets & planets, const T & planet_ran
     return planets_new;
 }
 
+} // namespace
+
+[[deprecated]]
 Planets simulate(const Planets & planets, units::base_time dt)
 {
     return calculate_planets_in_range(planets, planets, dt);
