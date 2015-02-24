@@ -7,14 +7,10 @@
 namespace
 {
 
-template <typename T>
-T square(T x)
-{
-    return x*x;
-}
-
 auto calc_single_accel(const Planet & calculated_planet, const Planet & second_planet)
 {
+    auto square = [](auto x){return x*x;};
+
     return normal(calculated_planet.distance_to(second_planet))
            * (G * second_planet.mass)
            / square(calculated_planet.distance_to(second_planet).length());
