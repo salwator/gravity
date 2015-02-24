@@ -54,6 +54,13 @@ struct Vector
     units::base_space x,y;
 };
 
+inline Vector normal(const Vector & old)
+{
+    auto new_vector = Vector(old);
+    new_vector.normalize();
+    return new_vector;
+}
+
 struct Planet{
 
     Planet(units::base_space, Vector, Vector = Vector(0,0));
@@ -71,5 +78,4 @@ struct Planet{
 };
 
 typedef std::vector<Planet> Planets;
-
 

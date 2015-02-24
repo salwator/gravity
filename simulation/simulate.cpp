@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 #include <functional>
 #include <algorithm>
 
@@ -13,30 +12,17 @@ bool same_planet(const Planet & first, const Planet & second)
     return (&first == &second);
 }
 
-auto distance_vector(const Planet & first, const Planet & second)
+template <typename T>
+T square(T x)
 {
-    return first.distance_to(second);
-}
-
-auto distance(const Planet & first, const Planet & second)
-{
-    return distance_vector(first,second).length();
-}
-
-auto normal_vector(const Planet & first, const Planet & second)
-{
-    auto distance = distance_vector(first,second);
-    distance.normalize();
-    return distance;
+    return x*x;
 }
 
 auto calc_single_accel(const Planet & calculated_planet, const Planet & second_planet)
 {
-    return Vector(normal_vector(calculated_planet, second_planet) *
-                  ((G * second_planet.mass) /
-                    pow(distance(calculated_planet,
-                                 second_planet),
-                        2)));
+    return normal(calculated_planet.distance_to(second_planet))
+           * (G * second_planet.mass)
+           / square(calculated_planet.distance_to(second_planet).length());
 }
 
 auto calc_all_accel(const Planets & planets, const Planet & planet)
