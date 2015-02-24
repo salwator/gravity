@@ -7,7 +7,7 @@
 namespace
 {
 
-std::vector<PlanetRefList> distribute_all_planets(const Planets & planets, int threads_num)
+auto distribute_all_planets(const Planets & planets, int threads_num)
 {
     auto distributed = std::vector<PlanetRefList>(threads_num);
 
@@ -18,7 +18,7 @@ std::vector<PlanetRefList> distribute_all_planets(const Planets & planets, int t
     return distributed;
 }
 
-Planets join_result_after_calculated(std::vector<std::future<Planets>> & futures)
+auto join_result_after_calculated(std::vector<std::future<Planets>> & futures)
 {
     auto planets_new = Planets();
 
