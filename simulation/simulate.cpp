@@ -13,24 +13,24 @@ bool same_planet(const Planet & first, const Planet & second)
     return (&first == &second);
 }
 
-Vector distance_vector(const Planet & first, const Planet & second)
+auto distance_vector(const Planet & first, const Planet & second)
 {
     return first.distance_to(second);
 }
 
-units::base_space distance(const Planet & first, const Planet & second)
+auto distance(const Planet & first, const Planet & second)
 {
     return distance_vector(first,second).length();
 }
 
-Vector normal_vector(const Planet & first, const Planet & second)
+auto normal_vector(const Planet & first, const Planet & second)
 {
     auto distance = distance_vector(first,second);
     distance.normalize();
     return distance;
 }
 
-Vector calc_single_accel(const Planet & calculated_planet, const Planet & second_planet)
+auto calc_single_accel(const Planet & calculated_planet, const Planet & second_planet)
 {
     return Vector(normal_vector(calculated_planet, second_planet) *
                   ((G * second_planet.mass) /
@@ -39,9 +39,9 @@ Vector calc_single_accel(const Planet & calculated_planet, const Planet & second
                         2)));
 }
 
-Vector calc_all_accel(const Planets & planets, const Planet & planet)
+auto calc_all_accel(const Planets & planets, const Planet & planet)
 {
-    auto accel_to_other_planets = [&planet](Vector acc, const Planet & second)
+    auto accel_to_other_planets = [&planet](auto acc, const auto & second)
                         {
                             return  (same_planet(planet, second)
                                      ? acc

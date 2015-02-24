@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.6)
 project (Gravity)
 
 SET (CMAKE_C_FLAGS      "-std=c99")
-SET (CMAKE_CXX_FLAGS      "-fPIC -std=c++11 -O3")
+SET (CMAKE_CXX_FLAGS      "-fPIC -std=c++14 -O3")
 
 # GTEST + GMOCK
 IF (DEFINED ENV{GTEST_PATH})
