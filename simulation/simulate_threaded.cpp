@@ -40,7 +40,7 @@ Planets simulate_threaded(const Planets & planets, const units::base_time dt, in
 
     for(auto i = 0; i < threads_num; i++)
         futures.push_back(std::async(std::launch::async,
-                                     [&](int i)
+                                     [&planets,&partial_planets,dt](auto i)
                                      {
                                         return simulate_range(planets, partial_planets[i], dt);
                                      }, i));
