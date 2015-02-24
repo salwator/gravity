@@ -5,7 +5,7 @@
 namespace units
 {
 
-typedef long double base_type;
+typedef double base_type;
 typedef base_type base_space;
 typedef base_type base_time;
 
@@ -16,13 +16,13 @@ const auto day = 24 * hour;
 const auto year = 365.25 * day;
 
 const auto meter = base_space(1);
-const auto kilometer = 1000 * meter;
-const auto au = 149597871 * kilometer;
+const auto kilometer = 1'000 * meter;
+const auto au = 149'597'871 * kilometer;
 
 const auto kilogram = base_type(1);
-const auto tone = 1000 * kilogram;
+const auto tone = 1'000 * kilogram;
 const auto M = 5.9736E+24 * kilogram;
-const auto sun_mass = 332946 * M;
+const auto sun_mass = 332'946 * M;
 
 }
 
