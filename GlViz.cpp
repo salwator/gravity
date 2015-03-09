@@ -53,12 +53,12 @@ void GlViz::plot_planets(const Planets & planets)
 
     for(const auto & planet : planets)
     {
-        auto shade = 0.5 + 0.5*(planet.mass / units::M);
+        auto shade = 0.5 + 0.5*(planet.mass() / units::M);
 
         glColor3f(0.1+shade,shade,shade);
-        glPointSize(planet.mass/units::M);
-        glVertex2f((planet.x/world_size)/ratio,
-                   planet.y/world_size);
+        glPointSize(planet.mass()/units::M);
+        glVertex2f((planet.position().x/world_size)/ratio,
+                    planet.position().y/world_size);
     }
 
     glEnd();
