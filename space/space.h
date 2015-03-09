@@ -87,6 +87,7 @@ public:
     Planet(const Planet &);
 
     virtual std::unique_ptr<ISimulatedBody> cloneWithMotion(Vector, Vector) const;
+
     virtual Vector position() const;
     virtual Vector speed() const;
     virtual units::base_type mass() const;
