@@ -101,4 +101,6 @@ private:
 };
 
 typedef std::vector<Planet> Planets;
+typedef std::vector<std::unique_ptr<ISimulatedBody>> Simulated;
+
 
