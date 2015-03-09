@@ -16,7 +16,7 @@ TEST_F(SimulationTest, GivenEmptyData_EmptyOutput)
 
 TEST_F(SimulationTest, GivenOnePlanet_Unchanged)
 {
-    planets.push_back(Planet(100, Vector(200,0)));
+    planets.push_back( Planet(100, {200,0}) );
     auto planets_new = simulate(planets);
 
     ASSERT_EQ(planets_new.size(), 1);
@@ -26,8 +26,8 @@ TEST_F(SimulationTest, GivenOnePlanet_Unchanged)
 
 TEST_F(SimulationTest, GivenTwoPlanetsWithZeroMass_Unchanged)
 {
-    planets.push_back(Planet(0, Vector(200,0)));
-    planets.push_back(Planet(0, Vector(220,0)));
+    planets.push_back( Planet(0, {200,0}) );
+    planets.push_back( Planet(0, {220,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -40,8 +40,8 @@ TEST_F(SimulationTest, GivenTwoPlanetsWithZeroMass_Unchanged)
 
 TEST_F(SimulationTest, GivenTwoPlanets_MassOfSecondIsOne_RadiusIsOne_AfterOneSecondPlanetVelocityIsGConst)
 {
-    planets.push_back(Planet(10, Vector(0,0)));
-    planets.push_back(Planet(1, Vector(1,0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(1, {1,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -50,8 +50,8 @@ TEST_F(SimulationTest, GivenTwoPlanets_MassOfSecondIsOne_RadiusIsOne_AfterOneSec
 
 TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheMass_TwiceTheAcceleration)
 {
-    planets.push_back(Planet(10, Vector(0,0)));
-    planets.push_back(Planet(2, Vector(1,0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(2, {1,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -60,8 +60,8 @@ TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheMass_TwiceTheAcceleration)
 
 TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheDistance_FourTimeLessAcceleration)
 {
-    planets.push_back(Planet(10, Vector(0,0)));
-    planets.push_back(Planet(2, Vector(2,0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(2, {2,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -70,8 +70,8 @@ TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheDistance_FourTimeLessAcceleration
 
 TEST_F(SimulationTest, GivenTwoPlanets_TripleTheDistance_NineTimeLessAcceleration)
 {
-    planets.push_back(Planet(10, Vector(0,0)));
-    planets.push_back(Planet(2, Vector(3,0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(2, {3,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -81,7 +81,7 @@ TEST_F(SimulationTest, GivenTwoPlanets_TripleTheDistance_NineTimeLessAcceleratio
 
 TEST_F(SimulationTest, VelocityChangesPositionDuringTime)
 {
-    planets.push_back(Planet(0,Vector(0,0),Vector(10,0)));
+    planets.push_back( Planet(0, {0,0}, {10,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -90,7 +90,7 @@ TEST_F(SimulationTest, VelocityChangesPositionDuringTime)
 
 TEST_F(SimulationTest, DoubleTimeStep_DoublePositionChangeInConstantMove)
 {
-    planets.push_back(Planet(0,Vector(0,0),Vector(10,0)));
+    planets.push_back( Planet(0, {0,0}, {10,0}) );
 
     auto planets_new = simulate(planets, 2.0);
 
@@ -99,9 +99,9 @@ TEST_F(SimulationTest, DoubleTimeStep_DoublePositionChangeInConstantMove)
 
 TEST_F(SimulationTest, CounterForcesTakeNoEffect)
 {
-    planets.push_back(Planet(10, Vector(0,0)));
-    planets.push_back(Planet(10, Vector(10,0)));
-    planets.push_back(Planet(10, Vector(20,0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(10, {10,0}) );
+    planets.push_back( Planet(10, {20,0}) );
 
     auto planets_new = simulate(planets, 2.0);
 
@@ -110,8 +110,8 @@ TEST_F(SimulationTest, CounterForcesTakeNoEffect)
 
 TEST_F(SimulationTest, SecondDimensionAdded_EqualToOneDimensionWhenZero)
 {
-    planets.push_back(Planet(10, Vector(0, 0)));
-    planets.push_back(Planet(1, Vector(1, 0)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(1, {1,0}) );
 
     auto planets_new = simulate(planets);
 
@@ -121,8 +121,8 @@ TEST_F(SimulationTest, SecondDimensionAdded_EqualToOneDimensionWhenZero)
 
 TEST_F(SimulationTest, AttractionIsEqualInDimensions)
 {
-    planets.push_back(Planet(10, Vector(0, 0)));
-    planets.push_back(Planet(1, Vector(0, 1)));
+    planets.push_back( Planet(10, {0,0}) );
+    planets.push_back( Planet(1, {0,1}) );
 
     auto planets_new = simulate(planets);
 
@@ -132,7 +132,7 @@ TEST_F(SimulationTest, AttractionIsEqualInDimensions)
 
 TEST_F(SimulationTest, VelocityChangesPositionDuringTime_InSecondDimension)
 {
-    planets.push_back(Planet(10, Vector(0, 0), Vector(0,10)));
+    planets.push_back( Planet(10, {0,0}, {0,10}) );
 
     auto planets_new = simulate(planets);
 
