@@ -15,7 +15,7 @@ constexpr double pi() { return std::atan(1)*4; }
 Planet on_others_orbit(Planet& central, units::base_space distance, units::base_type mass, float angle)
 {
     auto position = central.position() + Vector(cos(angle), sin(angle)) * distance;
-    auto orbital_speed = sqrt((G*central.mass) / distance);
+    auto orbital_speed = sqrt((G*central.mass()) / distance);
     auto normal_v = Vector(position);
     normal_v.normalize();
 
@@ -56,7 +56,7 @@ void print_results(ISimulator & simulation)
 {
     for(const auto & planet : simulation.result())
     {
-        std::cout << planet.x << "," << planet.y << ",";
+        std::cout << planet.position().x << planet.position().y << std::endl;
     }
 
     std::cout << std::endl;
@@ -82,7 +82,7 @@ class FpsCounter
                 count = 0;
                 std::cout << "fps: " << fps << std::endl;
 
-                if(fps > high_fps && high_fps_callback)
+                if(fps >= high_fps && high_fps_callback)
                     high_fps_callback();
             }
         }
@@ -110,24 +110,25 @@ class FpsCounter
 
 int main()
 {
-    auto viz = GlViz(1.1*units::au, 1280, 1024);
-
-    const auto time_delta = units::minute;
+    const auto time_delta = units::minute * 60;
     auto print_interval = time_delta;
     const auto simulation_time = units::year;
+
     const auto verbose = false;
 
     auto world = sample_planets();
-    add_random_planetoids(world, 0, 0.5*units::au, units::M, 500);
+    add_random_planetoids(world, 0, 0.5*units::au, units::M, 3000);
 
     auto simulation = NewtonSimulator(world, time_delta);
 
-    auto fpsCount = FpsCounter();
-    fpsCount.set_high_fps_callback(30, [&](){ print_interval += time_delta; });
+    auto viz = GlViz(1.1*units::au, 1280, 1024);
+
+    auto fpsCounter = FpsCounter();
+    fpsCounter.set_high_fps_callback(30, [&](){ print_interval += time_delta; });
 
     while(simulation.time() < simulation_time)
     {
-        fpsCount.tick();
+        fpsCounter.tick();
         simulation.simulate(print_interval);
 
         viz.print(simulation.result());

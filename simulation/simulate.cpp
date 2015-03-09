@@ -12,7 +12,7 @@ auto calc_single_accel(const Planet & calculated_planet, const Planet & second_p
     auto square = [](auto x){return x*x;};
 
     return normal(calculated_planet.distance_to(second_planet))
-           * (G * second_planet.mass)
+           * (G * second_planet.mass())
            / square(calculated_planet.distance_to(second_planet).length());
 }
 
@@ -46,7 +46,7 @@ auto calculate_planets_in_range(const Planets & planets, const T & planet_range,
                    std::back_inserter(planets_new),
                    [&planets,dt](const Planet & planet)
                    {
-                       return Planet(planet.mass,
+                       return Planet(planet.mass(),
                                      planet.position() + planet.speed() * dt,
                                      planet.speed() + calc_all_accel(planets, planet) * dt);
                    });

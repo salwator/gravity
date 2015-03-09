@@ -20,8 +20,8 @@ TEST_F(SimulationTest, GivenOnePlanet_Unchanged)
     auto planets_new = simulate(planets);
 
     ASSERT_EQ(planets_new.size(), 1);
-    EXPECT_EQ(planets_new[0].x, 200);
-    EXPECT_EQ(planets_new[0].mass, 100);
+    EXPECT_EQ(planets_new[0].position().x, 200);
+    EXPECT_EQ(planets_new[0].mass(), 100);
 }
 
 TEST_F(SimulationTest, GivenTwoPlanetsWithZeroMass_Unchanged)
@@ -32,10 +32,10 @@ TEST_F(SimulationTest, GivenTwoPlanetsWithZeroMass_Unchanged)
     auto planets_new = simulate(planets);
 
     ASSERT_EQ(planets_new.size(), 2);
-    EXPECT_EQ(planets_new[0].mass, 0);
-    EXPECT_EQ(planets_new[0].x, 200);
-    EXPECT_EQ(planets_new[1].mass, 0);
-    EXPECT_EQ(planets_new[1].x, 220);
+    EXPECT_EQ(planets_new[0].mass(), 0);
+    EXPECT_EQ(planets_new[0].position().x, 200);
+    EXPECT_EQ(planets_new[1].mass(), 0);
+    EXPECT_EQ(planets_new[1].position().x, 220);
 }
 
 TEST_F(SimulationTest, GivenTwoPlanets_MassOfSecondIsOne_RadiusIsOne_AfterOneSecondPlanetVelocityIsGConst)
@@ -45,7 +45,7 @@ TEST_F(SimulationTest, GivenTwoPlanets_MassOfSecondIsOne_RadiusIsOne_AfterOneSec
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, G);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, G);
 }
 
 TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheMass_TwiceTheAcceleration)
@@ -55,7 +55,7 @@ TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheMass_TwiceTheAcceleration)
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, 2*G);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, 2*G);
 }
 
 TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheDistance_FourTimeLessAcceleration)
@@ -65,7 +65,7 @@ TEST_F(SimulationTest, GivenTwoPlanets_TwiceTheDistance_FourTimeLessAcceleration
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, 0.5*G);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, 0.5*G);
 }
 
 TEST_F(SimulationTest, GivenTwoPlanets_TripleTheDistance_NineTimeLessAcceleration)
@@ -75,28 +75,26 @@ TEST_F(SimulationTest, GivenTwoPlanets_TripleTheDistance_NineTimeLessAcceleratio
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, G*2/9);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, G*2/9);
 
 }
 
 TEST_F(SimulationTest, VelocityChangesPositionDuringTime)
 {
-    planets.push_back(Planet(0,Vector(0,0)));
-    planets[0].vx = 10;
+    planets.push_back(Planet(0,Vector(0,0),Vector(10,0)));
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].x, 10);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, 10);
 }
 
 TEST_F(SimulationTest, DoubleTimeStep_DoublePositionChangeInConstantMove)
 {
-    planets.push_back(Planet(0,Vector(0,0)));
-    planets[0].vx = 10;
+    planets.push_back(Planet(0,Vector(0,0),Vector(10,0)));
 
     auto planets_new = simulate(planets, 2.0);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].x, 20);
+    EXPECT_DOUBLE_EQ(planets_new[0].position().x, 20);
 }
 
 TEST_F(SimulationTest, CounterForcesTakeNoEffect)
@@ -107,7 +105,7 @@ TEST_F(SimulationTest, CounterForcesTakeNoEffect)
 
     auto planets_new = simulate(planets, 2.0);
 
-    EXPECT_DOUBLE_EQ(planets_new[1].vx, 0.0);
+    EXPECT_DOUBLE_EQ(planets_new[1].speed().x, 0.0);
 }
 
 TEST_F(SimulationTest, SecondDimensionAdded_EqualToOneDimensionWhenZero)
@@ -117,8 +115,8 @@ TEST_F(SimulationTest, SecondDimensionAdded_EqualToOneDimensionWhenZero)
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, G);
-    EXPECT_DOUBLE_EQ(planets_new[0].vy, 0);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, G);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().y, 0);
 }
 
 TEST_F(SimulationTest, AttractionIsEqualInDimensions)
@@ -128,17 +126,16 @@ TEST_F(SimulationTest, AttractionIsEqualInDimensions)
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].vx, 0);
-    EXPECT_DOUBLE_EQ(planets_new[0].vy, G);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().x, 0);
+    EXPECT_DOUBLE_EQ(planets_new[0].speed().y, G);
 }
 
 TEST_F(SimulationTest, VelocityChangesPositionDuringTime_InSecondDimension)
 {
-    planets.push_back(Planet(10, Vector(0, 0)));
-    planets[0].vy = 10;
+    planets.push_back(Planet(10, Vector(0, 0), Vector(0,10)));
 
     auto planets_new = simulate(planets);
 
-    EXPECT_DOUBLE_EQ(planets_new[0].y, 10);
-    EXPECT_DOUBLE_EQ(planets_new[0].x, 0);
+    EXPECT_DOUBLE_EQ(planets_new[0].position().y, 10);
+    EXPECT_DOUBLE_EQ(planets_new[0].position().x, 0);
 }
