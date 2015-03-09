@@ -67,9 +67,10 @@ struct ISimulatedBody
     virtual ~ISimulatedBody() {}
 };
 
-struct Planet : public ISimulatedBody
+class Planet : public ISimulatedBody
 {
 
+public:
     Planet(units::base_space, Vector, Vector = Vector(0,0));
     Planet(const Planet &);
 
@@ -77,8 +78,10 @@ struct Planet : public ISimulatedBody
     Vector position() const;
     Vector speed() const;
     Vector distance_to(const Planet& other) const;
+    units::base_type mass() const;
 
-    units::base_type mass;
+private:
+    units::base_type m;
     units::base_space x,y;
     units::base_space vx, vy;
 
