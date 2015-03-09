@@ -34,6 +34,7 @@ struct Vector
 
 
     Vector operator+ (const Vector& right) const;
+    Vector operator- (const Vector& right) const;
     Vector& operator+= (const Vector& right);
     Vector& operator= (const Vector& ) = default;
 
@@ -67,7 +68,18 @@ struct ISimulatedBody
     virtual ~ISimulatedBody() {}
 };
 
-class Planet : public ISimulatedBody
+struct ICelestial
+{
+    virtual Vector position() const = 0;
+    virtual Vector speed() const = 0;
+    virtual units::base_type mass() const = 0;
+    virtual Vector distance_to(const ICelestial& other) const = 0;
+
+    virtual ~ICelestial() {}
+};
+
+
+class Planet : public ISimulatedBody, public ICelestial
 {
 
 public:
@@ -75,10 +87,10 @@ public:
     Planet(const Planet &);
 
     virtual std::unique_ptr<ISimulatedBody> cloneWithMotion(Vector, Vector) const;
-    Vector position() const;
-    Vector speed() const;
-    Vector distance_to(const Planet& other) const;
-    units::base_type mass() const;
+    virtual Vector position() const;
+    virtual Vector speed() const;
+    virtual units::base_type mass() const;
+    virtual Vector distance_to(const ICelestial& other) const;
 
 private:
     units::base_type m;

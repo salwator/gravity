@@ -19,6 +19,10 @@ Vector Vector::operator+ (const Vector& right) const
     return Vector(x + right.x, y + right.y);
 }
 
+Vector Vector::operator- (const Vector& right) const
+{
+    return Vector(x - right.x, y - right.y);
+}
 
 Vector& Vector::operator+= (const Vector& right)
 {

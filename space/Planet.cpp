@@ -25,9 +25,9 @@ Vector Planet::speed() const
     return Vector(vx,vy);
 }
 
-Vector Planet::distance_to(const Planet& other) const
+Vector Planet::distance_to(const ICelestial& other) const
 {
-    return Vector(other.x - x, other.y - y);
+    return other.position() - position();
 }
 
 units::base_type Planet::mass() const
