@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 namespace units
 {
@@ -54,19 +55,25 @@ struct Vector
     units::base_space x,y;
 };
 
-inline Vector normal(const Vector & old)
+inline Vector normal(Vector && old)
 {
-    auto new_vector = Vector(old);
-    new_vector.normalize();
-    return new_vector;
+    old.normalize();
+    return std::move(old);
 }
 
-struct Planet{
+struct ISimulatedBody
+{
+    virtual std::unique_ptr<ISimulatedBody> cloneWithNewPosition(Vector) const = 0;
+    virtual ~ISimulatedBody() {}
+};
+
+struct Planet : public ISimulatedBody
+{
 
     Planet(units::base_space, Vector, Vector = Vector(0,0));
     Planet(const Planet &);
 
-
+    virtual std::unique_ptr<ISimulatedBody> cloneWithNewPosition(Vector) const;
     Vector position() const;
     Vector speed() const;
     Vector distance_to(const Planet& other) const;

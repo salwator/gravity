@@ -29,3 +29,10 @@ Vector Planet::distance_to(const Planet& other) const
 {
     return Vector(other.x - x, other.y - y);
 }
+
+std::unique_ptr<ISimulatedBody> Planet::cloneWithNewPosition(Vector position) const
+{
+    return std::make_unique<Planet>(this->mass,
+                                    position,
+                                    this->speed());
+}
