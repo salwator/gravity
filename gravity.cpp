@@ -52,23 +52,14 @@ void add_random_planetoids(Planets & planets, int planet, units::base_space max_
 
 }
 
-void print_results(ISimulator & simulation)
-{
-    for(const auto & planet : simulation.result())
-    {
-        std::cout << planet.position().x << planet.position().y << std::endl;
-    }
-
-    std::cout << std::endl;
-}
-
 class FpsCounter
 {
     public:
+        using clock = std::chrono::high_resolution_clock;
+
         void tick()
         {
-            auto now = std::chrono::high_resolution_clock::now();
-            auto duration = std::chrono::duration<float>(now - last_time);
+            auto now = clock::now();
 
             if(count++ == 0)
             {
@@ -76,20 +67,16 @@ class FpsCounter
                 return;
             }
 
+            auto duration = std::chrono::duration<float>(now - last_time);
             if(duration >= std::chrono::seconds(1))
             {
-                fps = count / std::chrono::duration_cast<std::chrono::seconds>(duration).count();
+                auto fps = count / std::chrono::duration_cast<std::chrono::seconds>(duration).count();
                 count = 0;
                 std::cout << "fps: " << fps << std::endl;
 
                 if(fps >= high_fps && high_fps_callback)
                     high_fps_callback();
             }
-        }
-
-        int get_fps()
-        {
-            return fps;
         }
 
         void set_high_fps_callback(int thr_level, std::function<void()> callback)
@@ -99,42 +86,40 @@ class FpsCounter
         }
 
     private:
-        std::chrono::time_point<std::chrono::high_resolution_clock> last_time;
+        std::chrono::time_point<clock> last_time;
         std::function<void()> high_fps_callback;
         int high_fps = 0;
         int count = 0;
-        int fps = 0;
 };
 
 } // namespace
 
 int main()
 {
+    const auto window_width = 1280;
+    const auto window_height = 1024;
+
     const auto time_delta = units::minute * 60;
-    auto print_interval = time_delta;
     const auto simulation_time = units::year;
 
-    const auto verbose = false;
+    auto print_interval = time_delta;
 
     auto world = sample_planets();
-    add_random_planetoids(world, 0, 0.5*units::au, units::M, 3000);
+    add_random_planetoids(world, 0, 0.5*units::au, units::M, 500);
 
     auto simulation = NewtonSimulator(world, time_delta);
 
-    auto viz = GlViz(1.1*units::au, 1280, 1024);
+    auto viz = GlViz(1.1*units::au, window_width, window_height);
 
-    auto fpsCounter = FpsCounter();
-    fpsCounter.set_high_fps_callback(30, [&](){ print_interval += time_delta; });
+    auto fpsControl = FpsCounter();
+    fpsControl.set_high_fps_callback(30, [&print_interval,time_delta](){ print_interval += time_delta; });
 
     while(simulation.time() < simulation_time)
     {
-        fpsCounter.tick();
+        fpsControl.tick();
         simulation.simulate(print_interval);
 
         viz.print(simulation.result());
-
-        if(verbose)
-            print_results(simulation);
     }
 }
 
