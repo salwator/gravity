@@ -63,7 +63,7 @@ inline Vector normal(Vector && old)
 
 struct ISimulatedBody
 {
-    virtual std::unique_ptr<ISimulatedBody> cloneWithNewPosition(Vector) const = 0;
+    virtual std::unique_ptr<ISimulatedBody> cloneWithMotion(Vector pos, Vector v) const = 0;
     virtual ~ISimulatedBody() {}
 };
 
@@ -73,7 +73,7 @@ struct Planet : public ISimulatedBody
     Planet(units::base_space, Vector, Vector = Vector(0,0));
     Planet(const Planet &);
 
-    virtual std::unique_ptr<ISimulatedBody> cloneWithNewPosition(Vector) const;
+    virtual std::unique_ptr<ISimulatedBody> cloneWithMotion(Vector, Vector) const;
     Vector position() const;
     Vector speed() const;
     Vector distance_to(const Planet& other) const;
