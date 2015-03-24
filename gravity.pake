@@ -23,12 +23,15 @@ append $generic_compiler_flags -pedantic
 append $generic_compiler_flags -std=c++1y
 append $generic_compiler_flags -O3
 
+append $clang_specific_flags -std=c++1y
+append $gcc_specific_flags -std=c++14
+
 configuration clang \
     compiler(clang++) \
-    compiler_flags($gravity.generic_compiler_flags)
+    compiler_flags($gravity.generic_compiler_flags $clang_specific_flags)
 
 configuration gcc \
     compiler(g++) \
-    compiler_flags($gravity.generic_compiler_flags)
+    compiler_flags($gravity.generic_compiler_flags $gcc_specific_flags)
 
 configuration __default compiler_flags($gravity.generic_compiler_flags)
