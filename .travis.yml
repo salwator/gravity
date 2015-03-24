@@ -4,5 +4,5 @@ compiler:
     - gcc
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install -y glfw glfw-dev
+    - sudo apt-get install -y libglfw2 libglfw-dev
 script: ./pake.py gravity
