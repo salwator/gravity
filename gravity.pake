@@ -9,7 +9,7 @@ append $include_dirs simulation
 append $libraries space
 append $libraries simulation
 
-append $external_libs glfw GL
+append $external_libs glfw GL pthread X11 m
 
 append $dependencies space simulation
 
@@ -22,6 +22,7 @@ target application gravity \
 append $generic_compiler_flags -Wall
 append $generic_compiler_flags -pedantic
 append $generic_compiler_flags -std=c++14
+append $generic_compiler_flags -O3
 
 configuration clang \
     compiler(clang++) \
