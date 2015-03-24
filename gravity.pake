@@ -1,0 +1,30 @@
+append $sources gravity.cpp
+append $sources GlViz.cpp
+
+append $include_dirs .
+append $include_dirs space
+append $include_dirs external/glfw/include
+append $include_dirs simulation
+
+append $libraries space
+append $libraries simulation
+
+append $external_libs glfw GL
+
+append $dependencies space simulation
+
+target application gravity \
+    sources($sources) \
+    link_with($libraries $external_libs) \
+    include_dirs($include_dirs) \
+    depends_on($dependencies)
+
+append $generic_compiler_flags -Wall
+append $generic_compiler_flags -pedantic
+append $generic_compiler_flags -std=c++14
+
+configuration clang \
+    compiler(clang++) \
+    compiler_flags($gravity.generic_compiler_flags)
+
+configuration __default compiler_flags($gravity.generic_compiler_flags)
