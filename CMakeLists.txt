@@ -26,13 +26,13 @@ include_directories("external/glfw/include")
 
 ADD_SUBDIRECTORY(space)
 ADD_SUBDIRECTORY(simulation)
-ADD_SUBDIRECTORY(csv_import)
-ADD_SUBDIRECTORY("external/glfw")
+ADD_SUBDIRECTORY(runner)
+# ADD_SUBDIRECTORY(csv_import)
 
 # MAIN
 
 add_executable(Gravity gravity.cpp GlViz.cpp)
-target_link_libraries(Gravity space newton_simulator csv_import)
+target_link_libraries(Gravity space newton_simulator)
 target_link_libraries(Gravity glfw ${GLFW_LIBRARIES})
 
 # TESTING
