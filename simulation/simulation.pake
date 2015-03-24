@@ -1,0 +1,13 @@
+append $sources simulate.cpp
+append $sources simulate_threaded.cpp
+append $sources newton_simulator.cpp
+
+append $include_dirs .
+append $include_dirs ../space
+
+append $dependencies space
+
+target static_library simulation \
+    sources($sources) \
+    include_dirs($include_dirs) \
+    depends_on($dependencies)
