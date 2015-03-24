@@ -3,7 +3,6 @@ append $sources GlViz.cpp
 
 append $include_dirs .
 append $include_dirs space
-append $include_dirs external/glfw/include
 append $include_dirs simulation
 
 append $libraries space
@@ -26,6 +25,10 @@ append $generic_compiler_flags -O3
 
 configuration clang \
     compiler(clang++) \
+    compiler_flags($gravity.generic_compiler_flags)
+
+configuration gcc \
+    compiler(g++) \
     compiler_flags($gravity.generic_compiler_flags)
 
 configuration __default compiler_flags($gravity.generic_compiler_flags)
