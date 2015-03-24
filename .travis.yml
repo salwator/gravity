@@ -26,5 +26,5 @@ before_script:
     - c++ -v
 
 script:
-    - if [ "" == "g++" ]; then ./pake.py -c gcc gravity; fi
-    - if [ "" == "clang++" ]; then ./pake.py -c clang gravity; fi
+    - if [ "$CXX" == "g++" ]; then ./pake.py -c gcc gravity; fi
+    - if [ "$CXX" == "clang++" ]; then ./pake.py -c clang gravity; fi
