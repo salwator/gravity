@@ -1,0 +1,11 @@
+append $sources csv_import.cpp
+
+append $include_dirs .
+append $include_dirs ../space
+
+append $dependencies space
+
+target static_library csv_import \
+    sources($sources) \
+    include_dirs($include_dirs) \
+    depends_on($dependencies)
