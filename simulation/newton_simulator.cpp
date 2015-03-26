@@ -1,6 +1,6 @@
 #include <iostream>
 #include <thread>
-#include "newton_simulator.h"
+#include "newton_simulator.hpp"
 
 NewtonSimulator::NewtonSimulator(Planets planets, double dt)
     :

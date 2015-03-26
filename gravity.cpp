@@ -3,8 +3,9 @@
 #include <ratio>
 #include <random>
 #include <chrono>
+
 #include "space.h"
-#include "newton_simulator.h"
+#include "newton_simulator.hpp"
 #include "GlViz.h"
 
 namespace
@@ -105,7 +106,7 @@ int main()
     auto print_interval = time_delta;
 
     auto world = sample_planets();
-    add_random_planetoids(world, 0, 0.5*units::au, units::M, 500);
+    add_random_planetoids(world, 0, 0.5*units::au, units::M, 1000);
 
     auto simulation = NewtonSimulator(world, time_delta);
 

@@ -2,7 +2,7 @@ append $sources simulate.cpp
 append $sources simulate_threaded.cpp
 append $sources newton_simulator.cpp
 
-append $include_dirs .
+append $include_dirs Include
 append $include_dirs ../space
 
 append $dependencies space

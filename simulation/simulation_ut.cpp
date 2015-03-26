@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "space.h"
-#include "simulate.h"
+#include "simulate.hpp"
 
 class SimulationTest : public ::testing::Test
 {

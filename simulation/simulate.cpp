@@ -2,7 +2,7 @@
 #include <functional>
 #include <algorithm>
 
-#include "simulate.h"
+#include "simulate.hpp"
 
 namespace
 {
