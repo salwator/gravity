@@ -1,7 +1,7 @@
 append $sources GlViz.cpp
 
 append $include_dirs .
-append $include_dirs ../space
+append $include_dirs ../space/Include
 
 append $dependencies space
 

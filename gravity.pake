@@ -1,7 +1,7 @@
 append $sources gravity.cpp
 
 append $include_dirs .
-append $include_dirs space
+append $include_dirs space/Include
 append $include_dirs simulation/Include
 append $include_dirs glviz
 

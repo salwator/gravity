@@ -3,4 +3,4 @@ target static_library space sources($sources) include_dirs($include_dirs)
 append $sources Planet.cpp
 append $sources Vector.cpp
 
-append $include_dirs .
+append $include_dirs Include
