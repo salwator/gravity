@@ -29,6 +29,7 @@ install:
 before_script:
     - echo $PAKE_CONFIG
     - echo $CXX
+    - $CXX -v
 
 script:
     - python pake.py gravity -c $PAKE_CONFIG
