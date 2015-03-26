@@ -10,6 +10,10 @@ before_install:
 
     # clang 3.4
     - if [ "$CXX" == "clang++" ]; then sudo add-apt-repository -y ppa:h-rayflood/llvm; fi
+
+    # set PAKE config
+    - if [ "$CXX" == "clang++" ]; then  PAKE_CONFIG="clang" ; fi
+    - if [ "$CXX" == "g++" ]; then export PAKE_CONFIG="gcc" ; fi
     - sudo apt-get install -y libglfw2 libglfw-dev
     - sudo apt-get update -qq
 
@@ -23,9 +27,8 @@ install:
     - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.4"; fi
 
 before_script:
-    - if [ "$CXX" == "clang++" ]; then export PAKE_CONFIG="clang" ; fi
-    - if [ "$CXX" == "g++" ]; then export PAKE_CONFIG="gcc" ; fi
     - echo $PAKE_CONFIG
+    - echo $CXX
 
 script:
     - python pake.py gravity -c $PAKE_CONFIG
