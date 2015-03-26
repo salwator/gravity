@@ -21,10 +21,9 @@ target application gravity \
 
 append $generic_compiler_flags -Wall
 append $generic_compiler_flags -pedantic
-append $generic_compiler_flags -std=c++1y
 append $generic_compiler_flags -O3
 
-append $clang_specific_flags -std=c++1y
+append $clang_specific_flags -std=c++14
 append $gcc_specific_flags -std=c++14
 
 configuration clang \
