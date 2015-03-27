@@ -1,4 +1,4 @@
-## What it is
+## What is it?
 
 It is a simple celestial body simulator written from the beginning using newer C++11/14 features.
 Purpose of this project is to test some ideas in practice and have fun seeing planets moving around ;)
