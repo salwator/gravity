@@ -5,9 +5,9 @@ Purpose of this project is to test some ideas in practice and have fun seeing pl
 
 ## Want to play around?
 
-It is not really a much usefull project right now but if you really want to see it working here are some hints.
+It is not really a much useful project right now, but if you really want to see it working here are some hints.
 
-### Instalation
+### Installation
 
 You need [GLFW3](http://www.glfw.org/docs/latest/) library and its headers installed in your system. Linux machines supported only.
 It uses experimental [Pake](https://github.com/podusowski/pake) build system.
@@ -24,8 +24,7 @@ Use  `./pake.py -c clang gravity` or `./pake.py -c gcc gravity` for explicit com
 
 ### Configuration
 
-Currently it is configured only in main function code, however importing from csv file is already implemented.
-Will be used soon.
+Currently it is configured only in main function code, however importing from csv file is already implemented and might be used in the near future.
 
 ## How it works
 
